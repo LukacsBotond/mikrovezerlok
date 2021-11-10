@@ -1,8 +1,32 @@
 #pragma once
 
-#include "../../SPI/include/ISPI.h"
-#include <stdio.h>
-#include <stdlib.h>
+#define LCD_HOST HSPI_HOST
+#define DMA_CHAN 2
+
+#define PIN_NUM_MISO 19
+#define PIN_NUM_MOSI 23
+#define PIN_NUM_CLK 18
+#define PIN_NUM_CS 5
+
+#define PIN_NUM_DC (gpio_num_t)4
+#define PIN_NUM_RST (gpio_num_t)15
+#define PIN_NUM_BCKL (gpio_num_t)21
+
+#define PARALLEL_LINES 16
+
+typedef struct
+{
+    uint8_t cmd;
+    uint8_t data[16];
+    uint8_t databytes; //No of data in data; bit 7 = delay after set; 0xFF = end of cmds.
+} lcd_init_cmd_t;
+
+typedef enum
+{
+    LCD_TYPE_ILI = 1,
+    LCD_TYPE_ST,
+    LCD_TYPE_MAX,
+} type_lcd_t;
 
 #define ILI9341_TFTWIDTH 240  ///< ILI9341 max TFT width
 #define ILI9341_TFTHEIGHT 320 ///< ILI9341 max TFT height
@@ -64,17 +88,3 @@
 #define ILI9341_GMCTRP1 0xE0 ///< Positive Gamma Correction
 #define ILI9341_GMCTRN1 0xE1 // Negative Gamma Correction
 #define ILI9341_PWCTR6 0xFC
-
-class IntILI9341
-{
-protected:
-  virtual void initialize();
-
-public:
-  virtual ~IntILI9341(){};
-  virtual void set_command(const uint8_t cmd) = 0;
-  virtual void command_param(const uint8_t* data, int lenght = 1) = 0;
-
-  virtual void send_lines(int ypos, uint16_t *linedata) = 0;
-  virtual void send_line_finish() = 0;
-};

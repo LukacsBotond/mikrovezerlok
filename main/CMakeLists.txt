@@ -1,8 +1,10 @@
 set(srcs 
 "SPI/src/ESP32SPI.c"
-"pretty_effect.c"
-    "spi_master_example_main.c"
-    )
+"Display/src/ESP32ILI9341.c"
+"Common/src/common.c"
+#"pretty_effect.c"
+"snake_main.c"
+)
 
 # Only ESP32 has enough memory to do jpeg decoding
 if(IDF_TARGET STREQUAL "esp32")

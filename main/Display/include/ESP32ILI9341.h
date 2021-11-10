@@ -1,27 +1,13 @@
 #pragma once
-#include "./IntILI9341.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "driver/gpio.h"
+#include "../../GlobalDefine.h"
+#include "../../SPI/Include/ESP32SPI.h"
 
-#define PIN_NUM_DC 4
-#define PIN_NUM_RST 15
-#define PIN_NUM_BCKL 21
-
-typedef struct
-{
-    uint8_t cmd;
-    uint8_t data[16];
-    uint8_t databytes; //No of data in data; bit 7 = delay after set; 0xFF = end of cmds.
-} lcd_init_cmd_t;
-
-typedef enum
-{
-    LCD_TYPE_ILI = 1,
-    LCD_TYPE_ST,
-    LCD_TYPE_MAX,
-} type_lcd_t;
+#define lineSize 320 * PARALLEL_LINES * sizeof(uint16_t)
+uint16_t *line;
 
 DRAM_ATTR static const lcd_init_cmd_t ili_init_cmds[] = {
     /* Power contorl B, power control = 0, DC_ENA = 1 */
@@ -83,18 +69,5 @@ DRAM_ATTR static const lcd_init_cmd_t ili_init_cmds[] = {
     {0, {0}, 0xff},
 };
 
-class ESP32ILI9341 : public IntILI9341
-{
-private:
-  ISPI *spi;
-  void initialize();
-public:
-  ESP32ILI9341(ISPI *spi);
-  ~ESP32ILI9341();
-
-  void set_command(const uint8_t cmd) override;
-  void command_param(const uint8_t *data, int lenght = 1) override;
-
-  void send_lines(int ypos, uint16_t *linedata) override;
-  void send_line_finish() override;
-};
+void ESP32_ILI9341_lcd_init(spi_device_handle_t spi);
+void ESP32_ILI9341_fillScreen(spi_device_handle_t spi, uint16_t color);
