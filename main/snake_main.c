@@ -15,8 +15,6 @@
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 
-#include "pretty_effect.h"
-
 #include "./SPI/Include/ESP32SPI.h"
 #include "./Display/include/ESP32ILI9341.h"
 #include "./GameEngine/include/snake.h"
