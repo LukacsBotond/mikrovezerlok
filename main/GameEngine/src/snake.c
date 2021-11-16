@@ -20,12 +20,12 @@ void printSnake()
         printf("%i ", snakeY[i]);
     }
 
-    //printf("\n snakeX\n");
+    printf("\n snakeX\n");
     for (int i = 0; i < mapWidht; i++)
     {
-        //printf("%i ", snakeX[i]);
+        printf("%i ", snakeX[i]);
     }
-    //printf("\n");
+    printf("\n");
 }
 
 enum dir SNAKE_getDir()
@@ -119,20 +119,13 @@ bool SNAKE_Move()
 {
     if (SNAKE_gameOver())
         return false;
-    //printf("\n\n");
-    //printMap();
-
     int i;
-    printf("%i \n\n", size);
-    //printMap();
 
     for (i = size; i >= 1; i--)
     {
         snakeX[i] = snakeX[i - 1];
         snakeY[i] = snakeY[i - 1];
     }
-    printSnake();
-    //map[nextHeadX][nextHeadY] = snake_color;
     snakeX[0] = nextHeadX;
     snakeY[0] = nextHeadY;
     map[snakeX[0]][snakeY[0]] = snake_color;
@@ -167,7 +160,7 @@ bool SNAKE_IsFood()
     printf("next: %i\n", map[snakeX[0]][snakeY[0]]);
     if (map[nextHeadX][nextHeadY] == food_color)
     {
-        printf("---------------------------------ate\n");
+        //printf("---------------------------------ate\n");
         ate = true;
         map[snakeX[size]][snakeY[size]] = snake_color;
         //snakeX[size] =
