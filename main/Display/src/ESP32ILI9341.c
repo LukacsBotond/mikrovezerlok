@@ -4,7 +4,6 @@ void ESP32_ILI9341_lcd_init(spi_device_handle_t spi)
 {
     int cmd = 0;
     const lcd_init_cmd_t *lcd_init_cmds;
-    line = heap_caps_malloc(lineSize, MALLOC_CAP_DMA);
     //Initialize non-SPI GPIOs
     gpio_set_direction(PIN_NUM_DC, GPIO_MODE_OUTPUT);
     gpio_set_direction(PIN_NUM_RST, GPIO_MODE_OUTPUT);
@@ -42,14 +41,14 @@ void ESP32_ILI9341_fillScreen(spi_device_handle_t spi, uint16_t color)
     printf("%i\n", lineSize);
     for (int i = 0; i < lineSize; i++)
     {
-        line[i] = color;
+        line[0][i] = color;
         //printf("%i ", line[i]);
     }
 
-    printf("%i\n", line[0]);
+    //printf("%i\n", line[0]);
     for (int i = 0; i < 240; i += PARALLEL_LINES)
     {
-        ESP32_send_lines(spi, i, line);
+        ESP32_send_lines(spi, i, line[0]);
         ESP32_send_line_finish(spi);
     }
 }

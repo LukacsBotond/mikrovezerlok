@@ -1,4 +1,4 @@
-#include "/home/botond/Programok/visual/4ev/Mikrovezerlok/mikrovezerlok-1/main/SPI/Include/ESP32SPI.h"
+#include "../Include/ESP32SPI.h"
 
 void ESP32_lcd_cmd(spi_device_handle_t spi, const uint8_t cmd)
 {

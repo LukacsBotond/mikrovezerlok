@@ -9,7 +9,7 @@
 #include "esp_system.h"
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
-#include "/home/botond/Programok/visual/4ev/Mikrovezerlok/mikrovezerlok-2/main/GlobalDefine.h"
+#include "../../GlobalDefine.h"
 
 /*
  The LCD needs a bunch of command/argument values to be initialized. They are stored in this struct.

@@ -6,8 +6,9 @@
 #include "../../GlobalDefine.h"
 #include "../../SPI/Include/ESP32SPI.h"
 
-#define lineSize 320 * PARALLEL_LINES * sizeof(uint16_t)
-uint16_t *line;
+
+uint16_t line[2][lineSize];
+//uint16_t *line1;
 
 DRAM_ATTR static const lcd_init_cmd_t ili_init_cmds[] = {
     /* Power contorl B, power control = 0, DC_ENA = 1 */

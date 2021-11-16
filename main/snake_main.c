@@ -19,6 +19,7 @@
 
 #include "./SPI/Include/ESP32SPI.h"
 #include "./Display/include/ESP32ILI9341.h"
+#include "./GameEngine/include/snake.h"
 #include "./Common/include/common.h"
 
 //Simple routine to generate some patterns and send them to the LCD. Don't expect anything too
@@ -74,11 +75,8 @@ void app_main(void)
         .quadhd_io_num = -1,
         .max_transfer_sz = PARALLEL_LINES * 320 * 2 + 8};
     spi_device_interface_config_t devcfg = {
-#ifdef CONFIG_LCD_OVERCLOCK
         .clock_speed_hz = 26 * 1000 * 1000, //Clock out at 26 MHz
-#else
-        .clock_speed_hz = 10 * 1000 * 1000, //Clock out at 10 MHz
-#endif
+
         .mode = 0,                                     //SPI mode 0
         .spics_io_num = PIN_NUM_CS,                    //CS pin
         .queue_size = 7,                               //We want to be able to queue 7 transactions at a time
@@ -97,22 +95,9 @@ void app_main(void)
     //ESP_ERROR_CHECK(ret);
     printf("test\n");
     //Go do nice stuff.
-    ESP32_ILI9341_fillScreen(spi, swap_bytes(0x0000));
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    //SNAKE_gameStart(spi);
+    SNAKE_mainLoop(spi);
 
-    ESP32_ILI9341_fillScreen(spi, swap_bytes(0xFFFF));
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-    printf("piros\n");
-    ESP32_ILI9341_fillScreen(spi,swap_bytes(0xF800));
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-    printf("Sarga\n");
-    ESP32_ILI9341_fillScreen(spi,swap_bytes(0xFE60));
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-    printf("kek\n");
-    ESP32_ILI9341_fillScreen(spi,swap_bytes(0x081F));
     //display_pretty_colors(spi);
     while (1)
     {

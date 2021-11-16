@@ -12,8 +12,31 @@
 #define PIN_NUM_RST (gpio_num_t)15
 #define PIN_NUM_BCKL (gpio_num_t)21
 
-#define PARALLEL_LINES 16
+#define PIN_NUM_UP (gpio_num_t)33
+#define PIN_NUM_DOWN (gpio_num_t)25
 
+#define PIN_NUM_LEFT (gpio_num_t)12
+#define PIN_NUM_RIGHT (gpio_num_t)13
+
+#define PARALLEL_LINES 16
+#define lineSize 320 * PARALLEL_LINES * sizeof(uint16_t)
+#define mapHeight 320 / PARALLEL_LINES
+#define mapWidht 240 / PARALLEL_LINES
+
+#define bg_color 0x0000
+#define food_color 0xFF00
+#define snake_color 0x081F
+#define wall_color 0xFFFF
+
+extern uint16_t snakeX[mapWidht];
+extern uint16_t snakeY[mapHeight];
+extern int16_t nextHeadX;
+extern int16_t nextHeadY;
+extern uint16_t map[mapWidht][mapHeight];
+
+extern int score;
+extern int size;
+extern bool ate;
 typedef struct
 {
     uint8_t cmd;
