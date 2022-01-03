@@ -41,6 +41,43 @@ enum dir SNAKE_getDir()
     return none;
 }
 
+enum dir SNAKE_dirCheck(enum dir current, enum dir previous)
+{
+    if (current != previous)
+    {
+        switch (previous)
+        {
+        case up: //if up, then disable up and down
+            if (current == up || current == down)
+            {
+                return previous;
+            }
+            break;
+        case down: //if down disable up/down
+            if (current == up || current == down)
+            {
+                return previous;
+            }
+            break;
+        case left: //if left disable left/right
+            if (current == left || current == right)
+            {
+                return previous;
+            }
+            break;
+        case right://if right disable left/right
+            if (current == left || current == right)
+            {
+                return previous;
+            }
+            break;
+        default:
+            printf("not supposed to happen");
+        }
+    }
+    return current;
+}
+
 void SNAKE_gameStart(spi_device_handle_t spi)
 {
     gpio_set_direction(PIN_NUM_UP, GPIO_MODE_INPUT);
@@ -80,6 +117,7 @@ void SNAKE_mainLoop(spi_device_handle_t spi)
         if (currDir == none)
             currDir = prevDir;
         //printf("dir: %i\n", currDir);
+        currDir = SNAKE_dirCheck(currDir,prevDir);
         SNAKE_updateHead(currDir);
 
         SNAKE_IsFood();
@@ -179,9 +217,10 @@ void SNAKE_generateFood()
     int y;
     while (1)
     {
-        x = rand()%mapWidht;
-        y = rand()%mapHeight;
-        if(map[x][y] == 0){
+        x = rand() % mapWidht;
+        y = rand() % mapHeight;
+        if (map[x][y] == 0)
+        {
             map[x][y] = food_color;
             break;
         }

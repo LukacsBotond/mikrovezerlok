@@ -27,6 +27,7 @@ enum dir
 bool ate;
 
 enum dir SNAKE_getDir();
+enum dir SNAKE_dirCheck(enum dir current, enum dir previous);
 
 void SNAKE_gameStart(spi_device_handle_t spi);
 
